@@ -2,6 +2,7 @@ package com.dkd.manage.service;
 
 import java.util.List;
 import com.dkd.manage.domain.Partner;
+import com.dkd.manage.domain.vo.PartnerVo;
 
 /**
  * 合作商管理Service接口
@@ -58,4 +59,11 @@ public interface IPartnerService
      * @return 结果
      */
     public int deletePartnerById(Long id);
+    /**
+     * 查询合作商管理列表
+     *
+     * @param partner 合作商管理
+     * @return 合作商管理集合
+     */
+    public List<PartnerVo> selectParterVoList(Partner partner);
 }

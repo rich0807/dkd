@@ -34,7 +34,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectPartnerVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectParterVoList" resultType="com.dkd.manage.domain.vo.PartnerVo">
+        SELECT
+        p.*,
+
+        COUNT(pt.id) AS node_count  -- 确保统计的是 tb_node 的记录数
+        FROM tb_partner p
+        LEFT JOIN tb_node pt ON p.id = pt.partner_id
+        <where>
+            <if test="partnerName != null  and partnerName != ''"> and partner_name like concat('%', #{partnerName}, '%')</if>
+        </where>
+        GROUP BY p.id
+
+    </select>
+
     <insert id="insertPartner" parameterType="Partner" useGeneratedKeys="true" keyProperty="id">
         insert into tb_partner
         <trim prefix="(" suffix=")" suffixOverrides=",">

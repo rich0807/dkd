@@ -3,6 +3,8 @@ package com.dkd.manage.service.impl;
 import java.util.List;
 import com.dkd.common.utils.DateUtils;
 import com.dkd.common.utils.SecurityUtils;
+import com.dkd.manage.domain.vo.PartnerVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dkd.manage.mapper.PartnerMapper;
@@ -15,6 +17,7 @@ import com.dkd.manage.service.IPartnerService;
  * @author ruoyi
  * @date 2025-04-22
  */
+@Slf4j
 @Service
 public class PartnerServiceImpl implements IPartnerService 
 {
@@ -95,4 +98,17 @@ public class PartnerServiceImpl implements IPartnerService
     {
         return partnerMapper.deletePartnerById(id);
     }
+
+    /**
+     * 查询合作商管理列表
+     *
+     * @param partner 合作商管理
+     * @return
+     */
+    public List<PartnerVo> selectParterVoList(Partner partner) {
+        List<PartnerVo> list = partnerMapper.selectParterVoList(partner);
+        list.forEach( vo -> log.info("合作商 {} 的点位数: {}", vo.getPartnerName(), vo.getNodeCount()));
+        return list;
+    }
+
 }

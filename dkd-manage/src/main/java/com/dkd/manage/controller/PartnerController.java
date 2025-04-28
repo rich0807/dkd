@@ -3,6 +3,7 @@ package com.dkd.manage.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dkd.common.utils.SecurityUtils;
 import com.dkd.manage.domain.vo.PartnerVo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +103,22 @@ public class PartnerController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(partnerService.deletePartnerByIds(ids));
+    }
+/**
+ * 重置密码
+ */
+@PreAuthorize("@ss.hasPermi('manage:partner:edit')")
+@Log(title = "合作商管理", businessType = BusinessType.UPDATE)
+
+@PutMapping("resetpwd/{id}")
+    public AjaxResult resetpwd(@PathVariable Long id)
+    {
+        //1接受数据
+        //2创造合作商对象
+        Partner partner = new Partner();
+        partner.setId(id);
+
+       partner.setPassword(SecurityUtils.encryptPassword("123456"));
+        return toAjax(partnerService.updatePartner(partner));
     }
 }

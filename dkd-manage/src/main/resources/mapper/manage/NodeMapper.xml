@@ -17,7 +17,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="remark"    column="remark"    />
     </resultMap>
-
+    <resultMap type="NodeVo" id="NodeVoResult">
+        <result property="id"    column="id"    />
+        <result property="nodeName"    column="node_name"    />
+        <result property="address"    column="address"    />
+        <result property="businessDistrictType"    column="business_type"    />
+        <result property="regionId"    column="region_id"    />
+        <result property="partnerId"    column="partner_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+        <result property="vmCount"    column="vm_count"    />
+        <association property="region" javaType="Region" column="region_id" select="com.dkd.manage.mapper.RegionMapper.selectRegionById"/>
+        <association property="partner" javaType="Partner" column="partner_id" select="com.dkd.manage.mapper.PartnerMapper.selectPartnerById"/>
+    </resultMap>
     <sql id="selectNodeVo">
         select id, node_name, address, business_district_type, region_id, partner_id, create_time, update_time, create_by, update_by, remark from tb_node
     </sql>
@@ -35,7 +50,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectNodeVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectNodeVoList" resultMap="NodeVoResult">
+        SELECT
+        n.id,
+        n.node_name,
+        n.address,
+        n.business_district_type AS business_type,
+        n.region_id,
+        n.partner_id,
+        n.create_time,
+        n.update_time,
+        n.create_by,
+        n.update_by,
+        n.remark,
+        COUNT(v.id) AS vm_count
+        FROM
+        tb_node n
+        LEFT JOIN
+        tb_vending_machine v ON n.id = v.node_id
+        <where>
+            <if test="nodeName != null  and nodeName != ''"> and n.node_name like concat('%', #{nodeName}, '%')</if>
+            <if test="regionId != null "> and n.region_id = #{regionId}</if>
+            <if test="partnerId != null "> and n.partner_id = #{partnerId}</if>
+        </where>
+        GROUP BY
+        n.id
+    </select>
+
     <insert id="insertNode" parameterType="Node" useGeneratedKeys="true" keyProperty="id">
         insert into tb_node
         <trim prefix="(" suffix=")" suffixOverrides=",">

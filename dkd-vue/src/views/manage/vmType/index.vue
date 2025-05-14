@@ -9,14 +9,7 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="型号编码" prop="model">
-        <el-input
-          v-model="queryParams.model"
-          placeholder="请输入型号编码"
-          clearable
-          @keyup.enter="handleQuery"
-        />
-      </el-form-item>
+     
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <el-button icon="Refresh" @click="resetQuery">重置</el-button>
@@ -67,7 +60,6 @@
 
     <el-table v-loading="loading" :data="vmTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="型号名称" align="center" prop="name" />
       <el-table-column label="型号编码" align="center" prop="model" />
       <el-table-column label="设备图片" align="center" prop="image" width="100">
@@ -80,8 +72,8 @@
       <el-table-column label="设备容量" align="center" prop="channelMaxCapacity" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['manage:vmType:edit']">修改</el-button>
-          <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['manage:vmType:remove']">删除</el-button>
+          <el-button link type="primary"  @click="handleUpdate(scope.row)" v-hasPermi="['manage:vmType:edit']">修改</el-button>
+          <el-button link type="primary"  @click="handleDelete(scope.row)" v-hasPermi="['manage:vmType:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -103,17 +95,37 @@
         <el-form-item label="型号编码" prop="model">
           <el-input v-model="form.model" placeholder="请输入型号编码" />
         </el-form-item>
+       
+       <el-form-item label="货道数" prop="vmRow">
+  <el-input-number 
+    v-model="form.vmRow" 
+    :min="1" 
+    :max="10"
+    controls-position="right"
+    placeholder="请输入货道行"
+  />
+  &nbsp;行&nbsp;&nbsp;
+  <el-input-number 
+    v-model="form.vmCol" 
+    :min="1" 
+    :max="10"
+    controls-position="right"
+    placeholder="请输入货道列"
+  />
+  &nbsp;列&nbsp;&nbsp;
+</el-form-item>
+
+       <el-form-item label="设备容量" prop="channelMaxCapacity">
+  <el-input-number 
+    v-model="form.channelMaxCapacity" 
+    :min="1" 
+    :max="10"
+    controls-position="right"
+    placeholder="请输入设备容量"
+  />
+</el-form-item>
         <el-form-item label="设备图片" prop="image">
           <image-upload v-model="form.image"/>
-        </el-form-item>
-        <el-form-item label="货道行" prop="vmRow">
-          <el-input v-model="form.vmRow" placeholder="请输入货道行" />
-        </el-form-item>
-        <el-form-item label="货道列" prop="vmCol">
-          <el-input v-model="form.vmCol" placeholder="请输入货道列" />
-        </el-form-item>
-        <el-form-item label="设备容量" prop="channelMaxCapacity">
-          <el-input v-model="form.channelMaxCapacity" placeholder="请输入设备容量" />
         </el-form-item>
       </el-form>
       <template #footer>

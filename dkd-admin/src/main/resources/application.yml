@@ -126,3 +126,19 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+#  文件上传
+dromara:
+  x-file-storage: #文件存储配置
+    default-platform: aliyun-oss-1 #默认使用的存储平台
+    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
+    #对应平台的配置写在这里，注意缩进要对齐
+    aliyun-oss:
+      - platform: aliyun-oss-1 # 存储平台标识
+        enable-storage: true  # 启用存储
+        access-key: LTAI5t7iXAFopn3KW2bFWZ5t
+        secret-key: rXjkRkTVhecOgXVOQC6bFVMDJk89w1
+        end-point: oss-cn-beijing.aliyuncs.com
+        bucket-name: qian-event
+        domain: https://qian-event.oss-cn-beijing.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
+        base-path: Q-dkd-image/ # 基础路径
+

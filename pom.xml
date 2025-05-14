@@ -178,6 +178,7 @@
                 <artifactId>dkd-manage</artifactId>
                 <version>${dkd.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

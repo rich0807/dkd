@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询设备类型管路列表
+// 查询设备类型管理列表
 export function listVmType(query) {
   return request({
     url: '/manage/vmType/list',
@@ -9,7 +9,7 @@ export function listVmType(query) {
   })
 }
 
-// 查询设备类型管路详细
+// 查询设备类型管理详细
 export function getVmType(id) {
   return request({
     url: '/manage/vmType/' + id,
@@ -17,7 +17,7 @@ export function getVmType(id) {
   })
 }
 
-// 新增设备类型管路
+// 新增设备类型管理
 export function addVmType(data) {
   return request({
     url: '/manage/vmType',
@@ -26,7 +26,7 @@ export function addVmType(data) {
   })
 }
 
-// 修改设备类型管路
+// 修改设备类型管理
 export function updateVmType(data) {
   return request({
     url: '/manage/vmType',
@@ -35,7 +35,7 @@ export function updateVmType(data) {
   })
 }
 
-// 删除设备类型管路
+// 删除设备类型管理
 export function delVmType(id) {
   return request({
     url: '/manage/vmType/' + id,

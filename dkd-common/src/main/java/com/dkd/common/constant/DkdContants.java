@@ -45,15 +45,15 @@ public class DkdContants {
     /**
      * 售货机状态：未投放
      */
-    public static final Long VM_STATUS_NODEPLOY = 0l;
+    public static final Long VM_STATUS_NODEPLOY = 0L;
     /**
      * 售货机状态：运营
      */
-    public static final Long VM_STATUS_RUNNING = 1l;
+    public static final Long VM_STATUS_RUNNING = 1L;
     /**
      * 售货机状态：撤机
      */
-    public static final Long VM_STATUS_REVOKE = 3l;
+    public static final Long VM_STATUS_REVOKE = 3L;
 
     /**
      * 员工启用

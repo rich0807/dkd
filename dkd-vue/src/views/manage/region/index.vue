@@ -97,26 +97,23 @@
         </div>
       </template>
     </el-dialog>
-    <!-- 详情对话框 -->
-    <el-dialog title="查看详情对话框" v-model="partnerInfoOpen" width="500px" append-to-body>
-        <el-form-item label="区域名称" prop="regionName">
-          <el-input v-model="form.regionName" placeholder="请输入区域名称" disabled />
-        </el-form-item>
-        <table>包含点位</table>
-        <el-table  :data="nodeList" >
-      <el-table-column label="序号" align="center" prop="id"  type="index" width="50" />
-      <el-table-column label="点位名称" align="center" prop="nodeName" />
-      <el-table-column label="设备数量" align="center" prop="vmCount" />
+    <!-- 查看详情对话框 -->
+<el-dialog title="区域详情" v-model="regionInfoOpen" width="500px" append-to-body>
+    <el-form-item label="区域名称" prop="regionName">
+        <el-input v-model="form.regionName" disabled />
+    </el-form-item>
+    <label>包含点位：</label>
+    <el-table :data="nodeList">
+        <el-table-column label="序号" type="index" width="50" align="center" />
+        <el-table-column label="点位名称" align="center" prop="nodeName" />
+        <el-table-column label="设备数量" align="center" prop="vmCount" />
     </el-table>
-
-    </el-dialog>
-
+</el-dialog>
   </div>
 </template>
 
 <script setup name="Region">
 import { listRegion, getRegion, delRegion, addRegion, updateRegion } from "@/api/manage/region";
-import { getPanel } from "element-plus/es/components/date-picker/src/panel-utils.mjs";
 import {loadAllParams} from "@/api/page";
 import { listNode } from "@/api/manage/node";
 const { proxy } = getCurrentInstance();
@@ -216,24 +213,28 @@ function handleUpdate(row) {
     title.value = "修改区域管理";
   });
 }
-/**查看详情操作按钮 */
-const nodeList=ref([]);
-const partnerInfoOpen=ref(false);
-function  getRegionInfo(row) {
-  //查看区域信息
-  reset();
-  const _id = row.id 
-  getRegion(_id).then(response => {
-    form.value = response.data;
-   
-  });
-  //查看点位列表
-  loadAllParams.regionId = row.id;
-  listNode(loadAllParams).then(response => {
-    nodeList.value = response.rows;
-  });
-  partnerInfoOpen.value = true;
-}
+
+/* 查看详情按钮操作 */
+const nodeList = ref([]);
+  const regionInfoOpen = ref(false);
+  function getRegionInfo(row) {
+      console.log("查看详情");
+        // 查询区域信息
+        reset();
+        const _id = row.id
+        getRegion(_id).then(response => {
+            form.value = response.data;
+        });
+        // 查询点位列表
+        loadAllParams.regionId = row.id;
+        listNode(loadAllParams).then(response => {
+            nodeList.value = response.rows;
+        });
+        regionInfoOpen.value = true;
+      }
+
+      
+
 /** 提交按钮 */
 function submitForm() {
   proxy.$refs["regionRef"].validate(valid => {

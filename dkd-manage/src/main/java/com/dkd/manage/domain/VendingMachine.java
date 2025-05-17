@@ -75,7 +75,9 @@ public class VendingMachine extends BaseEntity
         this.id = id;
     }
 
-    public Long getId() 
+
+
+    public Long getId()
     {
         return id;
     }

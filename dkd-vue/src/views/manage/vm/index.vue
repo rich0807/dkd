@@ -39,7 +39,7 @@
         </div>
         </template>
       </el-table-column>
-      <el-table-column label="详细地址" align="center" prop="addr" />
+      <el-table-column label="详细地址" align="left" prop="addr" show-overflow-tooltip=" true" />
       <el-table-column label="合作商名称" align="center" prop="partnerId">
         <template #default="scope">
         <div v-for="item in partnerList" :key="item.id">

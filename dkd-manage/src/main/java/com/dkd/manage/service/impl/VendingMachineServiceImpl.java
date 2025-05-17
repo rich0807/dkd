@@ -112,16 +112,20 @@ public class VendingMachineServiceImpl implements IVendingMachineService
         return result;
     }
 
+
     /**
      * 修改设备管理
-     * 
+     *
      * @param vendingMachine 设备管理
      * @return 结果
      */
     @Override
-    public int updateVendingMachine(VendingMachine vendingMachine)
-    {
-        vendingMachine.setUpdateTime(DateUtils.getNowDate());
+    public int updateVendingMachine(VendingMachine vendingMachine) {
+        //查询点位表，补充 区域、点位、合作商等信息
+        Node node = nodeService.selectNodeById(vendingMachine.getNodeId());
+        BeanUtil.copyProperties(node, vendingMachine, "id");// 商圈类型、区域、合作商
+        vendingMachine.setAddr(node.getAddress());// 设备地址
+        vendingMachine.setUpdateTime(DateUtils.getNowDate());// 更新时间
         return vendingMachineMapper.updateVendingMachine(vendingMachine);
     }
 

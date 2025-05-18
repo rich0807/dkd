@@ -6,8 +6,8 @@ import com.dkd.manage.domain.Policy;
 /**
  * 策略管理Service接口
  * 
- * @author RQ
- * @date 2025-05-18
+ * @author itheima
+ * @date 2024-07-12
  */
 public interface IPolicyService 
 {

@@ -48,14 +48,20 @@ public class ThreadPoolConfig
     @Bean(name = "scheduledExecutorService")
     protected ScheduledExecutorService scheduledExecutorService()
     {
+        // 创建一个具有核心线程数的ScheduledThreadPoolExecutor
+        // 使用BasicThreadFactory构建器定制线程工厂：设置线程命名模式为"schedule-pool-%d"，守护线程为true
+        // 设置拒绝策略为ThreadPoolExecutor.CallerRunsPolicy
         return new ScheduledThreadPoolExecutor(corePoolSize,
                 new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
                 new ThreadPoolExecutor.CallerRunsPolicy())
         {
+            // 在执行任务之后执行的操作
             @Override
             protected void afterExecute(Runnable r, Throwable t)
             {
+                // 调用父类的afterExecute方法
                 super.afterExecute(r, t);
+                // 打印任务执行过程中的异常信息
                 Threads.printException(r, t);
             }
         };

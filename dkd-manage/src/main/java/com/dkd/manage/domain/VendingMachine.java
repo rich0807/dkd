@@ -1,17 +1,17 @@
 package com.dkd.manage.domain;
 
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.dkd.common.annotation.Excel;
 import com.dkd.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
 
 /**
  * 设备管理对象 tb_vending_machine
- * 
- * @author RQ
- * @date 2025-05-14
+ *
+ * @author itheima
+ * @date 2024-06-21
  */
 public class VendingMachine extends BaseEntity
 {
@@ -70,149 +70,147 @@ public class VendingMachine extends BaseEntity
     /** 策略id */
     private Long policyId;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
-
-
 
     public Long getId()
     {
         return id;
     }
-    public void setInnerCode(String innerCode) 
+    public void setInnerCode(String innerCode)
     {
         this.innerCode = innerCode;
     }
 
-    public String getInnerCode() 
+    public String getInnerCode()
     {
         return innerCode;
     }
-    public void setChannelMaxCapacity(Long channelMaxCapacity) 
+    public void setChannelMaxCapacity(Long channelMaxCapacity)
     {
         this.channelMaxCapacity = channelMaxCapacity;
     }
 
-    public Long getChannelMaxCapacity() 
+    public Long getChannelMaxCapacity()
     {
         return channelMaxCapacity;
     }
-    public void setNodeId(Long nodeId) 
+    public void setNodeId(Long nodeId)
     {
         this.nodeId = nodeId;
     }
 
-    public Long getNodeId() 
+    public Long getNodeId()
     {
         return nodeId;
     }
-    public void setAddr(String addr) 
+    public void setAddr(String addr)
     {
         this.addr = addr;
     }
 
-    public String getAddr() 
+    public String getAddr()
     {
         return addr;
     }
-    public void setLastSupplyTime(Date lastSupplyTime) 
+    public void setLastSupplyTime(Date lastSupplyTime)
     {
         this.lastSupplyTime = lastSupplyTime;
     }
 
-    public Date getLastSupplyTime() 
+    public Date getLastSupplyTime()
     {
         return lastSupplyTime;
     }
-    public void setBusinessType(Long businessType) 
+    public void setBusinessType(Long businessType)
     {
         this.businessType = businessType;
     }
 
-    public Long getBusinessType() 
+    public Long getBusinessType()
     {
         return businessType;
     }
-    public void setRegionId(Long regionId) 
+    public void setRegionId(Long regionId)
     {
         this.regionId = regionId;
     }
 
-    public Long getRegionId() 
+    public Long getRegionId()
     {
         return regionId;
     }
-    public void setPartnerId(Long partnerId) 
+    public void setPartnerId(Long partnerId)
     {
         this.partnerId = partnerId;
     }
 
-    public Long getPartnerId() 
+    public Long getPartnerId()
     {
         return partnerId;
     }
-    public void setVmTypeId(Long vmTypeId) 
+    public void setVmTypeId(Long vmTypeId)
     {
         this.vmTypeId = vmTypeId;
     }
 
-    public Long getVmTypeId() 
+    public Long getVmTypeId()
     {
         return vmTypeId;
     }
-    public void setVmStatus(Long vmStatus) 
+    public void setVmStatus(Long vmStatus)
     {
         this.vmStatus = vmStatus;
     }
 
-    public Long getVmStatus() 
+    public Long getVmStatus()
     {
         return vmStatus;
     }
-    public void setRunningStatus(String runningStatus) 
+    public void setRunningStatus(String runningStatus)
     {
         this.runningStatus = runningStatus;
     }
 
-    public String getRunningStatus() 
+    public String getRunningStatus()
     {
         return runningStatus;
     }
-    public void setLongitudes(Long longitudes) 
+    public void setLongitudes(Long longitudes)
     {
         this.longitudes = longitudes;
     }
 
-    public Long getLongitudes() 
+    public Long getLongitudes()
     {
         return longitudes;
     }
-    public void setLatitude(Long latitude) 
+    public void setLatitude(Long latitude)
     {
         this.latitude = latitude;
     }
 
-    public Long getLatitude() 
+    public Long getLatitude()
     {
         return latitude;
     }
-    public void setClientId(String clientId) 
+    public void setClientId(String clientId)
     {
         this.clientId = clientId;
     }
 
-    public String getClientId() 
+    public String getClientId()
     {
         return clientId;
     }
-    public void setPolicyId(Long policyId) 
+    public void setPolicyId(Long policyId)
     {
         this.policyId = policyId;
     }
 
-    public Long getPolicyId() 
+    public Long getPolicyId()
     {
         return policyId;
     }

@@ -73,7 +73,9 @@ spring:
     port: 6379
     # 数据库索引
     database: 0
-#    password: root@123456
+    # 密码
+    password: root@123456
+#    password:
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -94,7 +96,7 @@ token:
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
-  expireTime: 30
+  expireTime: 300
 
 # MyBatis配置
 mybatis:
@@ -126,7 +128,7 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
-#  文件上传
+ # 文件上传
 dromara:
   x-file-storage: #文件存储配置
     default-platform: aliyun-oss-1 #默认使用的存储平台
@@ -140,5 +142,6 @@ dromara:
         end-point: oss-cn-beijing.aliyuncs.com
         bucket-name: qian-event
         domain: https://qian-event.oss-cn-beijing.aliyuncs.com/ # 访问域名，注意“/”结尾，例如：https://abc.oss-cn-shanghai.aliyuncs.com/
-        base-path: Q-dkd-image/ # 基础路径
+        base-path: dkd-images/ # 基础路径
+
 

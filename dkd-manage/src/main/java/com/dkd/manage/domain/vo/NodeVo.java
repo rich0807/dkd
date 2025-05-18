@@ -9,11 +9,11 @@ import lombok.Data;
 public class NodeVo extends Node {
 
     // 设备数量
-    private int vmCount;
+    private Integer vmCount;
 
-    // 区域
+    // 区域信息
     private Region region;
 
-    // 合作商
+    // 合作商信息
     private Partner partner;
 }

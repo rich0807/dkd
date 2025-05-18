@@ -1,12 +1,12 @@
 package com.dkd.web.controller.common;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.dkd.common.config.RuoYiConfig;
+import com.dkd.common.constant.Constants;
+import com.dkd.common.core.domain.AjaxResult;
+import com.dkd.common.utils.StringUtils;
+import com.dkd.common.utils.file.FileUploadUtils;
+import com.dkd.common.utils.file.FileUtils;
+import com.dkd.framework.config.ServerConfig;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
 import org.slf4j.Logger;
@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.dkd.common.config.RuoYiConfig;
-import com.dkd.common.constant.Constants;
-import com.dkd.common.core.domain.AjaxResult;
-import com.dkd.common.utils.StringUtils;
-import com.dkd.common.utils.file.FileUploadUtils;
-import com.dkd.common.utils.file.FileUtils;
-import com.dkd.framework.config.ServerConfig;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 通用请求处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -41,12 +41,13 @@ public class CommonController
     private ServerConfig serverConfig;
 
     private static final String FILE_DELIMETER = ",";
+
     @Autowired
     private FileStorageService fileStorageService;//注入实列
 
     /**
      * 通用下载请求
-     * 
+     *
      * @param fileName 文件名称
      * @param delete 是否删除
      */
@@ -76,29 +77,39 @@ public class CommonController
         }
     }
 
-
     /**
      * 通用上传请求（单个）
      */
     @PostMapping("/upload")
-    public AjaxResult uploadFile(MultipartFile file) throws Exception {
+    public AjaxResult uploadFile(MultipartFile file) throws Exception
+    {
+        try
+        {
+            /*// 上传文件路径
+            String filePath = RuoYiConfig.getUploadPath();
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.upload(filePath, file);
+            String url = serverConfig.getUrl() + fileName;*/
 
-        try {
-            // 指定oss保存文件路径
+            // 指定oss保存文件路径 dkd-images/2024/06/19/文件名
             String objectName = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + "/";
-            // 上传图片，成功返回文件信息
-            FileInfo fileInfo = fileStorageService.of(file).setPath(objectName).upload();
-            // 设置返回结果
+            // 上传图片，返回文件信息
+            FileInfo fileInfo = fileStorageService.of(file)
+                    .setPath(objectName)
+                    .upload();
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", fileInfo.getUrl());
-            ajax.put("fileName", fileInfo.getUrl());  //注意：这里的值要改为url，前端访问的地址,需要文件的地址 而不是文件名称
+            ajax.put("fileName", fileInfo.getUrl()); // 注意：这里的值需要改为URL，因为前端的访问地址会做一个判断，如果一http开头就直接显示此图片
             ajax.put("newFileName", fileInfo.getUrl());
             ajax.put("originalFilename", file.getOriginalFilename());
             return ajax;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             return AjaxResult.error(e.getMessage());
         }
     }
+
     /**
      * 通用上传请求（多个）
      */

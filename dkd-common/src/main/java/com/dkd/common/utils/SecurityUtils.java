@@ -1,21 +1,22 @@
 package com.dkd.common.utils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.PatternMatchUtils;
 import com.dkd.common.constant.Constants;
 import com.dkd.common.constant.HttpStatus;
 import com.dkd.common.core.domain.entity.SysRole;
 import com.dkd.common.core.domain.model.LoginUser;
 import com.dkd.common.exception.ServiceException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.PatternMatchUtils;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 安全服务工具类
- * 
+ *
  * @author ruoyi
  */
 public class SecurityUtils
@@ -110,13 +111,15 @@ public class SecurityUtils
      */
     public static boolean matchesPassword(String rawPassword, String encodedPassword)
     {
+        // 使用BCrypt工具类对密码进行加密和验证
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // 验证输入的原始密码是否与已加密的密码匹配
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 
     /**
      * 是否为管理员
-     * 
+     *
      * @param userId 用户ID
      * @return 结果
      */
@@ -127,7 +130,7 @@ public class SecurityUtils
 
     /**
      * 验证用户是否具备某权限
-     * 
+     *
      * @param permission 权限字符串
      * @return 用户是否具备某权限
      */
@@ -138,7 +141,7 @@ public class SecurityUtils
 
     /**
      * 判断是否包含权限
-     * 
+     *
      * @param authorities 权限列表
      * @param permission 权限字符串
      * @return 用户是否具备某权限
@@ -151,7 +154,7 @@ public class SecurityUtils
 
     /**
      * 验证用户是否拥有某个角色
-     * 
+     *
      * @param role 角色标识
      * @return 用户是否具备某角色
      */
@@ -164,7 +167,7 @@ public class SecurityUtils
 
     /**
      * 判断是否包含角色
-     * 
+     *
      * @param roles 角色列表
      * @param role 角色
      * @return 用户是否具备某角色权限

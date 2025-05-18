@@ -7,9 +7,9 @@ import com.dkd.common.core.domain.BaseEntity;
 
 /**
  * 工单角色对象 tb_role
- * 
- * @author Q
- * @date 2025-05-02
+ *
+ * @author itheima
+ * @date 2024-06-15
  */
 public class Role extends BaseEntity
 {
@@ -20,38 +20,38 @@ public class Role extends BaseEntity
 
     /** 角色编码
  */
-    @Excel(name = "角色编码 ")
+    @Excel(name = "角色编码")
     private String roleCode;
 
     /** 角色名称
  */
-    @Excel(name = "角色名称 ")
+    @Excel(name = "角色名称")
     private String roleName;
 
-    public void setRoleId(Long roleId) 
+    public void setRoleId(Long roleId)
     {
         this.roleId = roleId;
     }
 
-    public Long getRoleId() 
+    public Long getRoleId()
     {
         return roleId;
     }
-    public void setRoleCode(String roleCode) 
+    public void setRoleCode(String roleCode)
     {
         this.roleCode = roleCode;
     }
 
-    public String getRoleCode() 
+    public String getRoleCode()
     {
         return roleCode;
     }
-    public void setRoleName(String roleName) 
+    public void setRoleName(String roleName)
     {
         this.roleName = roleName;
     }
 
-    public String getRoleName() 
+    public String getRoleName()
     {
         return roleName;
     }

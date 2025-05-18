@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class PartnerVo extends Partner {
-    //点位数
-    private int nodeCount;
+
+    // 点位数量
+    private Integer nodeCount;
 }

@@ -1,20 +1,21 @@
 package com.dkd.manage.service;
 
-import java.util.List;
 import com.dkd.manage.domain.Region;
 import com.dkd.manage.domain.vo.RegionVo;
 
+import java.util.List;
+
 /**
  * 区域管理Service接口
- * 
- * @author ruoyi
- * @date 2025-04-22
+ *
+ * @author itheima
+ * @date 2024-06-05
  */
-public interface IRegionService 
+public interface IRegionService
 {
     /**
      * 查询区域管理
-     * 
+     *
      * @param id 区域管理主键
      * @return 区域管理
      */
@@ -22,7 +23,7 @@ public interface IRegionService
 
     /**
      * 查询区域管理列表
-     * 
+     *
      * @param region 区域管理
      * @return 区域管理集合
      */
@@ -30,7 +31,7 @@ public interface IRegionService
 
     /**
      * 新增区域管理
-     * 
+     *
      * @param region 区域管理
      * @return 结果
      */
@@ -38,7 +39,7 @@ public interface IRegionService
 
     /**
      * 修改区域管理
-     * 
+     *
      * @param region 区域管理
      * @return 结果
      */
@@ -46,7 +47,7 @@ public interface IRegionService
 
     /**
      * 批量删除区域管理
-     * 
+     *
      * @param ids 需要删除的区域管理主键集合
      * @return 结果
      */
@@ -54,11 +55,17 @@ public interface IRegionService
 
     /**
      * 删除区域管理信息
-     * 
+     *
      * @param id 区域管理主键
      * @return 结果
      */
     public int deleteRegionById(Long id);
 
-    List<RegionVo> selectRegionVoList(Region region);
+
+    /**
+     * 查询区域列表
+     * @param region
+     * @return RegionVo集合
+     */
+    public List<RegionVo> selectRegionVoList(Region region);
 }

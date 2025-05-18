@@ -1,22 +1,21 @@
 package com.dkd.manage.mapper;
 
-import java.util.List;
 import com.dkd.manage.domain.Partner;
 import com.dkd.manage.domain.vo.PartnerVo;
-import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 合作商管理Mapper接口
- * 
- * @author ruoyi
- * @date 2025-04-22
+ *
+ * @author itheima
+ * @date 2024-06-05
  */
-
-public interface PartnerMapper 
+public interface PartnerMapper
 {
     /**
      * 查询合作商管理
-     * 
+     *
      * @param id 合作商管理主键
      * @return 合作商管理
      */
@@ -24,7 +23,7 @@ public interface PartnerMapper
 
     /**
      * 查询合作商管理列表
-     * 
+     *
      * @param partner 合作商管理
      * @return 合作商管理集合
      */
@@ -32,7 +31,7 @@ public interface PartnerMapper
 
     /**
      * 新增合作商管理
-     * 
+     *
      * @param partner 合作商管理
      * @return 结果
      */
@@ -40,7 +39,7 @@ public interface PartnerMapper
 
     /**
      * 修改合作商管理
-     * 
+     *
      * @param partner 合作商管理
      * @return 结果
      */
@@ -48,7 +47,7 @@ public interface PartnerMapper
 
     /**
      * 删除合作商管理
-     * 
+     *
      * @param id 合作商管理主键
      * @return 结果
      */
@@ -56,16 +55,16 @@ public interface PartnerMapper
 
     /**
      * 批量删除合作商管理
-     * 
+     *
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
     public int deletePartnerByIds(Long[] ids);
-/**
-     * 查询合作商管理列表
-     *
-     * @param partner 合作商管理
-     * @return 合作商管理集合
+
+    /**
+     * 查询合作商列表
+     * @param partner
+     * @return PartnerVo集合
      */
-    public List<PartnerVo> selectParterVoList(Partner partner);
+    public List<PartnerVo> selectPartnerVoList(Partner partner);
 }

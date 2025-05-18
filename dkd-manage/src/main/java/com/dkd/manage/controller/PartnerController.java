@@ -1,34 +1,27 @@
 package com.dkd.manage.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import com.dkd.common.utils.SecurityUtils;
-import com.dkd.manage.domain.vo.PartnerVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.dkd.common.annotation.Log;
 import com.dkd.common.core.controller.BaseController;
 import com.dkd.common.core.domain.AjaxResult;
-import com.dkd.common.enums.BusinessType;
-import com.dkd.manage.domain.Partner;
-import com.dkd.manage.service.IPartnerService;
-import com.dkd.common.utils.poi.ExcelUtil;
 import com.dkd.common.core.page.TableDataInfo;
+import com.dkd.common.enums.BusinessType;
+import com.dkd.common.utils.SecurityUtils;
+import com.dkd.common.utils.poi.ExcelUtil;
+import com.dkd.manage.domain.Partner;
+import com.dkd.manage.domain.vo.PartnerVo;
+import com.dkd.manage.service.IPartnerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 合作商管理Controller
- * 
- * @author ruoyi
- * @date 2025-04-22
+ *
+ * @author itheima
+ * @date 2024-06-05
  */
 @RestController
 @RequestMapping("/manage/partner")
@@ -45,7 +38,7 @@ public class PartnerController extends BaseController
     public TableDataInfo list(Partner partner)
     {
         startPage();
-        List<PartnerVo> voList = partnerService.selectParterVoList(partner);
+        List<PartnerVo> voList = partnerService.selectPartnerVoList(partner);
         return getDataTable(voList);
     }
 
@@ -104,21 +97,20 @@ public class PartnerController extends BaseController
     {
         return toAjax(partnerService.deletePartnerByIds(ids));
     }
-/**
- * 重置密码
- */
-@PreAuthorize("@ss.hasPermi('manage:partner:edit')")
-@Log(title = "合作商管理", businessType = BusinessType.UPDATE)
 
-@PutMapping("resetpwd/{id}")
-    public AjaxResult resetpwd(@PathVariable Long id)
-    {
-        //1接受数据
-        //2创造合作商对象
+    /**
+     * 重置合作商密码
+     */
+    @PreAuthorize("@ss.hasPermi('manage:partner:edit')")
+    @Log(title = "重置合作商密码", businessType = BusinessType.UPDATE)
+    @PutMapping("resetPwd/{id}")
+    public AjaxResult resetPwd(@PathVariable Long id){//1. 接收请求参数
+        //2. 创建合作商对象
         Partner partner = new Partner();
-        partner.setId(id);
-
-       partner.setPassword(SecurityUtils.encryptPassword("123456"));
+        partner.setId(id);// 设置id
+        partner.setPassword(SecurityUtils.encryptPassword("123456"));// 设置加密后的初始密码
+        //3. 调用service更新密码
         return toAjax(partnerService.updatePartner(partner));
+
     }
 }

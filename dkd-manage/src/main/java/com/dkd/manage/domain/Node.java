@@ -8,14 +8,14 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 点位管理对象 tb_node
  * 
- * @author ruoyi
- * @date 2025-04-22
+ * @author itheima
+ * @date 2024-06-05
  */
 public class Node extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 点位ID */
+    /** 主键id */
     private Long id;
 
     /** 点位名称 */
@@ -28,14 +28,14 @@ public class Node extends BaseEntity
 
     /** 商圈类型 */
     @Excel(name = "商圈类型")
-    private Long businessDistrictType;
+    private Long businessType;
 
-    /** 关联区域ID */
-    @Excel(name = "关联区域ID")
+    /** 区域ID */
+    @Excel(name = "区域ID")
     private Long regionId;
 
-    /** 关联合作商ID */
-    @Excel(name = "关联合作商ID")
+    /** 合作商ID */
+    @Excel(name = "合作商ID")
     private Long partnerId;
 
     public void setId(Long id) 
@@ -65,14 +65,14 @@ public class Node extends BaseEntity
     {
         return address;
     }
-    public void setBusinessDistrictType(Long businessDistrictType) 
+    public void setBusinessType(Long businessType) 
     {
-        this.businessDistrictType = businessDistrictType;
+        this.businessType = businessType;
     }
 
-    public Long getBusinessDistrictType() 
+    public Long getBusinessType() 
     {
-        return businessDistrictType;
+        return businessType;
     }
     public void setRegionId(Long regionId) 
     {
@@ -99,7 +99,7 @@ public class Node extends BaseEntity
             .append("id", getId())
             .append("nodeName", getNodeName())
             .append("address", getAddress())
-            .append("businessDistrictType", getBusinessDistrictType())
+            .append("businessType", getBusinessType())
             .append("regionId", getRegionId())
             .append("partnerId", getPartnerId())
             .append("createTime", getCreateTime())

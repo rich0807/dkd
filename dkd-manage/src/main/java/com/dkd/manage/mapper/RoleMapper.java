@@ -6,8 +6,8 @@ import com.dkd.manage.domain.Role;
 /**
  * 工单角色Mapper接口
  * 
- * @author Q
- * @date 2025-05-02
+ * @author itheima
+ * @date 2024-06-15
  */
 public interface RoleMapper 
 {

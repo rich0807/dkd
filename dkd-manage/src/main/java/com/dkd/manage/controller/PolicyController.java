@@ -24,8 +24,8 @@ import com.dkd.common.core.page.TableDataInfo;
 /**
  * 策略管理Controller
  * 
- * @author RQ
- * @date 2025-05-18
+ * @author itheima
+ * @date 2024-07-12
  */
 @RestController
 @RequestMapping("/manage/policy")

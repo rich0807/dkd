@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dkd.manage.mapper.RegionMapper">
-    
+
     <resultMap type="Region" id="RegionResult">
         <result property="id"    column="id"    />
         <result property="regionName"    column="region_name"    />
@@ -20,16 +20,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectRegionList" parameterType="Region" resultMap="RegionResult">
         <include refid="selectRegionVo"/>
-        <where>  
+        <where>
             <if test="regionName != null  and regionName != ''"> and region_name like concat('%', #{regionName}, '%')</if>
         </where>
     </select>
-    
+
     <select id="selectRegionById" parameterType="Long" resultMap="RegionResult">
         <include refid="selectRegionVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectRegionVoList" resultType="com.dkd.manage.domain.vo.RegionVo">
+        SELECT r.*, COUNT(n.id) AS node_count FROM tb_region r LEFT JOIN tb_node n ON r.id = n.region_id
+        <where>
+            <if test="regionName != null  and regionName != ''"> and r.region_name like concat('%', #{regionName}, '%')</if>
+        </where>
+        GROUP BY r.id
+    </select>
+
     <insert id="insertRegion" parameterType="Region" useGeneratedKeys="true" keyProperty="id">
         insert into tb_region
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,17 +75,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteRegionByIds" parameterType="String">
-        delete from tb_region where id in 
+        delete from tb_region where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-
-    <select id="selectRegionVoList" resultType="com.dkd.manage.domain.vo.RegionVo">
-        select r.id,r.region_name,r.remark,ifnull(n.node_count,0) as node_count from tb_region r
-        left join (select region_id,count(*) as node_count from tb_node group by region_id) n on r.id=n.region_id
-        <where>
-            <if test="regionName != null  and regionName != ''"> and r.region_name like concat('%', #{regionName}, '%')</if>
-        </where>
-    </select>
 </mapper>

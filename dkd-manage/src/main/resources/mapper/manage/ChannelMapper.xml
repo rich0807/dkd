@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dkd.manage.mapper.ChannelMapper">
-    
+
     <resultMap type="Channel" id="ChannelResult">
         <result property="id"    column="id"    />
         <result property="channelCode"    column="channel_code"    />
@@ -17,13 +17,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
     </resultMap>
 
+    <resultMap type="channelVo" id="ChannelVoResult">
+        <result property="id"    column="id"    />
+        <result property="channelCode"    column="channel_code"    />
+        <result property="skuId"    column="sku_id"    />
+        <result property="vmId"    column="vm_id"    />
+        <result property="innerCode"    column="inner_code"    />
+        <result property="maxCapacity"    column="max_capacity"    />
+        <result property="currentCapacity"    column="current_capacity"    />
+        <result property="lastSupplyTime"    column="last_supply_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <association property="sku" javaType="Sku" column="sku_id" select="com.dkd.manage.mapper.SkuMapper.selectSkuBySkuId"/>
+    </resultMap>
+
     <sql id="selectChannelVo">
         select id, channel_code, sku_id, vm_id, inner_code, max_capacity, current_capacity, last_supply_time, create_time, update_time from tb_channel
     </sql>
 
     <select id="selectChannelList" parameterType="Channel" resultMap="ChannelResult">
         <include refid="selectChannelVo"/>
-        <where>  
+        <where>
             <if test="channelCode != null  and channelCode != ''"> and channel_code = #{channelCode}</if>
             <if test="skuId != null "> and sku_id = #{skuId}</if>
             <if test="vmId != null "> and vm_id = #{vmId}</if>
@@ -33,12 +47,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="lastSupplyTime != null "> and last_supply_time = #{lastSupplyTime}</if>
         </where>
     </select>
-    
+
     <select id="selectChannelById" parameterType="Long" resultMap="ChannelResult">
         <include refid="selectChannelVo"/>
         where id = #{id}
     </select>
-        
+    <select id="countChannelBySkuIds" resultType="java.lang.Integer">
+        select count(1) from tb_channel where sku_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="selectCahanelVoListByInnerCode" resultMap="ChannelVoResult">
+        <include refid="selectChannelVo"/>
+        where inner_code =#{innerCode}
+    </select>
+
     <insert id="insertChannel" parameterType="Channel" useGeneratedKeys="true" keyProperty="id">
         insert into tb_channel
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -65,6 +89,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
+    <insert id="batchInsertChannels" parameterType="java.util.List">
+        insert into tb_channel
+        (channel_code,  vm_id, inner_code, max_capacity, current_capacity, last_supply_time, create_time, update_time)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.channelCode},  #{item.vmId}, #{item.innerCode}, #{item.maxCapacity},
+            #{item.currentCapacity}, #{item.lastSupplyTime}, #{item.createTime}, #{item.updateTime})
+        </foreach>
+    </insert>
+
+
     <update id="updateChannel" parameterType="Channel">
         update tb_channel
         <trim prefix="SET" suffixOverrides=",">
@@ -81,32 +116,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
+    <update id="batchUpdateChannels" parameterType="java.util.List">
+        <foreach item="channel" index="index" collection="list" separator="; ">
+            UPDATE tb_channel
+            <trim prefix="SET" suffixOverrides=",">
+                <if test="channel.channelCode != null and channel.channelCode != ''">channel_code = #{channel.channelCode},</if>
+                <if test="channel.skuId != null">sku_id = #{channel.skuId},</if>
+                <if test="channel.vmId != null">vm_id = #{channel.vmId},</if>
+                <if test="channel.innerCode != null and channel.innerCode != ''">inner_code = #{channel.innerCode},</if>
+                <if test="channel.maxCapacity != null">max_capacity = #{channel.maxCapacity},</if>
+                <if test="channel.currentCapacity != null">current_capacity = #{channel.currentCapacity},</if>
+                <if test="channel.lastSupplyTime != null">last_supply_time = #{channel.lastSupplyTime},</if>
+                <if test="channel.createTime != null">create_time = #{channel.createTime},</if>
+                <if test="channel.updateTime != null">update_time = #{channel.updateTime},</if>
+            </trim>
+            WHERE id = #{channel.id}
+        </foreach>
+    </update>
+
     <delete id="deleteChannelById" parameterType="Long">
         delete from tb_channel where id = #{id}
     </delete>
 
     <delete id="deleteChannelByIds" parameterType="String">
-        delete from tb_channel where id in 
+        delete from tb_channel where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
-
-    <insert id="batchInsertChannel" parameterType="java.util.List">
-        INSERT INTO tb_channel (
-        channel_code, vm_id, inner_code, max_capacity, last_supply_time, create_time, update_time
-        ) VALUES
-        <foreach collection="list" item="channel" separator=",">
-            (
-            #{channel.channelCode},
-            #{channel.vmId},
-            #{channel.innerCode},
-            #{channel.maxCapacity},
-            #{channel.lastSupplyTime},
-            #{channel.createTime},
-            #{channel.updateTime}
-            )
-        </foreach>
-    </insert>
-
 </mapper>

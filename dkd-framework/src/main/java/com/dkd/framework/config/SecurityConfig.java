@@ -22,9 +22,10 @@ import com.dkd.framework.security.handle.LogoutSuccessHandlerImpl;
 
 /**
  * spring security配置
- * 
+ *
  * @author ruoyi
  */
+// 开启方法级别的权限控制 ==> @PreAuthorize
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
@@ -33,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
      */
     @Autowired
     private UserDetailsService userDetailsService;
-    
+
     /**
      * 认证失败处理类
      */
@@ -51,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
      */
     @Autowired
     private JwtAuthenticationTokenFilter authenticationTokenFilter;
-    
+
     /**
      * 跨域过滤器
      */
@@ -95,14 +96,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception
     {
-        // 注解标记允许匿名访问的url
+        // 配置URL访问授权规则
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
+        // 遍历无需认证即可访问的URL列表，设置这些URL对所有用户可访问
         permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
-
+        // 配置Web应用程序规则
         httpSecurity
-                // CSRF禁用，因为不使用session
+                // 禁用CSRF（跨站请求伪造），因为不使用session
                 .csrf().disable()
-                // 禁用HTTP响应标头
+                // 禁用HTTP响应头
                 .headers().cacheControl().disable().and()
                 // 认证失败处理类
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

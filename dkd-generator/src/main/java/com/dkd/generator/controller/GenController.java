@@ -1,23 +1,5 @@
 package com.dkd.generator.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
@@ -34,10 +16,22 @@ import com.dkd.generator.domain.GenTable;
 import com.dkd.generator.domain.GenTableColumn;
 import com.dkd.generator.service.IGenTableColumnService;
 import com.dkd.generator.service.IGenTableService;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 代码生成 操作处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -113,9 +107,11 @@ public class GenController extends BaseController
     @PostMapping("/importTable")
     public AjaxResult importTableSave(String tables)
     {
+        // 将表名字符串转换为数组 tb_task_collect,tb_vendout_running
         String[] tableNames = Convert.toStrArray(tables);
         // 查询表信息
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
+        // 导入表结构（保存）
         genTableService.importGenTable(tableList, SecurityUtils.getUsername());
         return success();
     }
@@ -237,8 +233,11 @@ public class GenController extends BaseController
     @GetMapping("/batchGenCode")
     public void batchGenCode(HttpServletResponse response, String tables) throws IOException
     {
+        // 将表名字符串转换为数组 tb_task_collect,tb_vendout_running
         String[] tableNames = Convert.toStrArray(tables);
+        // 根据表名下载生成的代码字节数组
         byte[] data = genTableService.downloadCode(tableNames);
+        // 将生成的代码字节流通过HTTP响应返回给客户端
         genCode(response, data);
     }
 
@@ -247,12 +246,19 @@ public class GenController extends BaseController
      */
     private void genCode(HttpServletResponse response, byte[] data) throws IOException
     {
+        // 重置响应以防止头部冲突
         response.reset();
+        // 设置响应头以允许跨源访问
         response.addHeader("Access-Control-Allow-Origin", "*");
+        // 指定哪些头部可以被JavaScript访问
         response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        // 设置附件下载属性并指定文件名
         response.setHeader("Content-Disposition", "attachment; filename=\"ruoyi.zip\"");
+        // 设置响应的内容长度
         response.addHeader("Content-Length", "" + data.length);
+        // 设置响应的内容类型为二进制数据下载
         response.setContentType("application/octet-stream; charset=UTF-8");
+        // 将文件数据写入响应输出流
         IOUtils.write(data, response.getOutputStream());
     }
 }

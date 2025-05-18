@@ -1,35 +1,38 @@
 package com.dkd.manage.service.impl;
 
-import java.util.List;
 import com.dkd.common.utils.DateUtils;
+import com.dkd.manage.domain.Emp;
 import com.dkd.manage.domain.Role;
+import com.dkd.manage.mapper.EmpMapper;
 import com.dkd.manage.mapper.RegionMapper;
 import com.dkd.manage.mapper.RoleMapper;
+import com.dkd.manage.service.IEmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dkd.manage.mapper.EmpMapper;
-import com.dkd.manage.domain.Emp;
-import com.dkd.manage.service.IEmpService;
+
+import java.util.List;
 
 /**
  * 人员列表Service业务层处理
- * 
- * @author Q
- * @date 2025-05-02
+ *
+ * @author itheima
+ * @date 2024-06-15
  */
 @Service
-public class EmpServiceImpl implements IEmpService 
+public class EmpServiceImpl implements IEmpService
 {
     @Autowired
     private EmpMapper empMapper;
+
     @Autowired
     private RegionMapper regionMapper;
 
     @Autowired
     private RoleMapper roleMapper;
+
     /**
      * 查询人员列表
-     * 
+     *
      * @param id 人员列表主键
      * @return 人员列表
      */
@@ -91,7 +94,7 @@ public class EmpServiceImpl implements IEmpService
 
     /**
      * 批量删除人员列表
-     * 
+     *
      * @param ids 需要删除的人员列表主键
      * @return 结果
      */
@@ -103,7 +106,7 @@ public class EmpServiceImpl implements IEmpService
 
     /**
      * 删除人员列表信息
-     * 
+     *
      * @param id 人员列表主键
      * @return 结果
      */

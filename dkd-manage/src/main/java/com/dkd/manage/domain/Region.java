@@ -8,14 +8,14 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 区域管理对象 tb_region
  * 
- * @author ruoyi
- * @date 2025-04-22
+ * @author itheima
+ * @date 2024-06-05
  */
 public class Region extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 区域ID */
+    /** 主键id */
     private Long id;
 
     /** 区域名称 */

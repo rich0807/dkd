@@ -8,8 +8,8 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 策略管理对象 tb_policy
  * 
- * @author RQ
- * @date 2025-05-18
+ * @author itheima
+ * @date 2024-07-12
  */
 public class Policy extends BaseEntity
 {

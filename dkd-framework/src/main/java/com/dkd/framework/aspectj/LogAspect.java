@@ -1,21 +1,5 @@
 package com.dkd.framework.aspectj;
 
-import java.util.Collection;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.ArrayUtils;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.NamedThreadLocal;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson2.JSON;
 import com.dkd.common.annotation.Log;
 import com.dkd.common.core.domain.entity.SysUser;
@@ -30,10 +14,27 @@ import com.dkd.common.utils.ip.IpUtils;
 import com.dkd.framework.manager.AsyncManager;
 import com.dkd.framework.manager.factory.AsyncFactory;
 import com.dkd.system.domain.SysOperLog;
+import org.apache.commons.lang3.ArrayUtils;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.NamedThreadLocal;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 操作日志记录处理
- * 
+ *
  * @author ruoyi
  */
 @Aspect
@@ -54,6 +55,7 @@ public class LogAspect
     @Before(value = "@annotation(controllerLog)")
     public void boBefore(JoinPoint joinPoint, Log controllerLog)
     {
+        // 在每个方法执行前记录当前时间
         TIME_THREADLOCAL.set(System.currentTimeMillis());
     }
 
@@ -70,7 +72,7 @@ public class LogAspect
 
     /**
      * 拦截异常操作
-     * 
+     *
      * @param joinPoint 切点
      * @param e 异常
      */
@@ -84,7 +86,7 @@ public class LogAspect
     {
         try
         {
-            // 获取当前的用户
+            // 获取当前的登录用户
             LoginUser loginUser = SecurityUtils.getLoginUser();
 
             // *========数据库日志=========*//
@@ -96,18 +98,18 @@ public class LogAspect
             operLog.setOperUrl(StringUtils.substring(ServletUtils.getRequest().getRequestURI(), 0, 255));
             if (loginUser != null)
             {
-                operLog.setOperName(loginUser.getUsername());
+                operLog.setOperName(loginUser.getUsername());// 操作人
                 SysUser currentUser = loginUser.getUser();
                 if (StringUtils.isNotNull(currentUser) && StringUtils.isNotNull(currentUser.getDept()))
                 {
-                    operLog.setDeptName(currentUser.getDept().getDeptName());
+                    operLog.setDeptName(currentUser.getDept().getDeptName());// 部门名称
                 }
             }
 
             if (e != null)
-            {
-                operLog.setStatus(BusinessStatus.FAIL.ordinal());
-                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+            {// 如有业务方法异常
+                operLog.setStatus(BusinessStatus.FAIL.ordinal());// 记录异常状态
+                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));// 错误消息
             }
             // 设置方法名称
             String className = joinPoint.getTarget().getClass().getName();
@@ -119,7 +121,7 @@ public class LogAspect
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 设置消耗时间
             operLog.setCostTime(System.currentTimeMillis() - TIME_THREADLOCAL.get());
-            // 保存数据库
+            // 保存操作日志到数据库
             AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
         }
         catch (Exception exp)
@@ -136,7 +138,7 @@ public class LogAspect
 
     /**
      * 获取注解中对方法的描述信息 用于Controller层注解
-     * 
+     *
      * @param log 日志
      * @param operLog 操作日志
      * @throws Exception
@@ -164,7 +166,7 @@ public class LogAspect
 
     /**
      * 获取请求的参数，放到log中
-     * 
+     *
      * @param operLog 操作日志
      * @throws Exception 异常
      */
@@ -220,7 +222,7 @@ public class LogAspect
 
     /**
      * 判断是否需要过滤的对象。
-     * 
+     *
      * @param o 对象信息。
      * @return 如果是需要过滤的对象，则返回true；否则返回false。
      */

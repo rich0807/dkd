@@ -5,5 +5,8 @@ import lombok.Data;
 
 @Data
 public class RegionVo extends Region {
-    private int nodeCount;
+
+    // 点位数量
+    private Integer nodeCount;
+
 }

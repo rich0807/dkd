@@ -8,10 +8,10 @@ import com.dkd.manage.domain.VmType;
 import com.dkd.manage.service.IVmTypeService;
 
 /**
- * 设备类型管路Service业务层处理
+ * 设备类型管理Service业务层处理
  * 
- * @author RQ
- * @date 2025-05-14
+ * @author itheima
+ * @date 2024-06-21
  */
 @Service
 public class VmTypeServiceImpl implements IVmTypeService 
@@ -20,10 +20,10 @@ public class VmTypeServiceImpl implements IVmTypeService
     private VmTypeMapper vmTypeMapper;
 
     /**
-     * 查询设备类型管路
+     * 查询设备类型管理
      * 
-     * @param id 设备类型管路主键
-     * @return 设备类型管路
+     * @param id 设备类型管理主键
+     * @return 设备类型管理
      */
     @Override
     public VmType selectVmTypeById(Long id)
@@ -32,10 +32,10 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 查询设备类型管路列表
+     * 查询设备类型管理列表
      * 
-     * @param vmType 设备类型管路
-     * @return 设备类型管路
+     * @param vmType 设备类型管理
+     * @return 设备类型管理
      */
     @Override
     public List<VmType> selectVmTypeList(VmType vmType)
@@ -44,9 +44,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 新增设备类型管路
+     * 新增设备类型管理
      * 
-     * @param vmType 设备类型管路
+     * @param vmType 设备类型管理
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 修改设备类型管路
+     * 修改设备类型管理
      * 
-     * @param vmType 设备类型管路
+     * @param vmType 设备类型管理
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 批量删除设备类型管路
+     * 批量删除设备类型管理
      * 
-     * @param ids 需要删除的设备类型管路主键
+     * @param ids 需要删除的设备类型管理主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 删除设备类型管路信息
+     * 删除设备类型管理信息
      * 
-     * @param id 设备类型管路主键
+     * @param id 设备类型管理主键
      * @return 结果
      */
     @Override

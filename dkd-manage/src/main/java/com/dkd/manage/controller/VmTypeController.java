@@ -22,10 +22,10 @@ import com.dkd.common.utils.poi.ExcelUtil;
 import com.dkd.common.core.page.TableDataInfo;
 
 /**
- * 设备类型管路Controller
+ * 设备类型管理Controller
  * 
- * @author RQ
- * @date 2025-05-14
+ * @author itheima
+ * @date 2024-06-21
  */
 @RestController
 @RequestMapping("/manage/vmType")
@@ -35,7 +35,7 @@ public class VmTypeController extends BaseController
     private IVmTypeService vmTypeService;
 
     /**
-     * 查询设备类型管路列表
+     * 查询设备类型管理列表
      */
     @PreAuthorize("@ss.hasPermi('manage:vmType:list')")
     @GetMapping("/list")
@@ -47,20 +47,20 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 导出设备类型管路列表
+     * 导出设备类型管理列表
      */
     @PreAuthorize("@ss.hasPermi('manage:vmType:export')")
-    @Log(title = "设备类型管路", businessType = BusinessType.EXPORT)
+    @Log(title = "设备类型管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, VmType vmType)
     {
         List<VmType> list = vmTypeService.selectVmTypeList(vmType);
         ExcelUtil<VmType> util = new ExcelUtil<VmType>(VmType.class);
-        util.exportExcel(response, list, "设备类型管路数据");
+        util.exportExcel(response, list, "设备类型管理数据");
     }
 
     /**
-     * 获取设备类型管路详细信息
+     * 获取设备类型管理详细信息
      */
     @PreAuthorize("@ss.hasPermi('manage:vmType:query')")
     @GetMapping(value = "/{id}")
@@ -70,10 +70,10 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 新增设备类型管路
+     * 新增设备类型管理
      */
     @PreAuthorize("@ss.hasPermi('manage:vmType:add')")
-    @Log(title = "设备类型管路", businessType = BusinessType.INSERT)
+    @Log(title = "设备类型管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody VmType vmType)
     {
@@ -81,10 +81,10 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 修改设备类型管路
+     * 修改设备类型管理
      */
     @PreAuthorize("@ss.hasPermi('manage:vmType:edit')")
-    @Log(title = "设备类型管路", businessType = BusinessType.UPDATE)
+    @Log(title = "设备类型管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody VmType vmType)
     {
@@ -92,10 +92,10 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 删除设备类型管路
+     * 删除设备类型管理
      */
     @PreAuthorize("@ss.hasPermi('manage:vmType:remove')")
-    @Log(title = "设备类型管路", businessType = BusinessType.DELETE)
+    @Log(title = "设备类型管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {

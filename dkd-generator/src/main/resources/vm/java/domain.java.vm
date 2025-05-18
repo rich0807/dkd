@@ -1,105 +1,75 @@
 package ${packageName}.domain;
 
+## 根据列类型获取导入包
 #foreach ($import in $importList)
 import ${import};
 #end
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+## 导入项目自定义的Excel注解，用于生成Excel文档
 import com.dkd.common.annotation.Excel;
 #if($table.crud || $table.sub)
+## 如果表具有CRUD操作或子表，继承BaseEntity
 import com.dkd.common.core.domain.BaseEntity;
 #elseif($table.tree)
+## 如果表是树形结构，继承TreeEntity
 import com.dkd.common.core.domain.TreeEntity;
 #end
+## 导入lombok相关注解
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * ${functionName}对象 ${tableName}
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
 #if($table.crud || $table.sub)
-#set($Entity="BaseEntity")
+    #set($Entity="BaseEntity")
 #elseif($table.tree)
-#set($Entity="TreeEntity")
+    #set($Entity="TreeEntity")
 #end
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ${ClassName} extends ${Entity}
-{
-    private static final long serialVersionUID = 1L;
-
+        {   ## 定义类的序列化版本ID
+private static final long serialVersionUID = 1L;
+## 根据表的列定义实体类的属性
 #foreach ($column in $columns)
-#if(!$table.isSuperColumn($column.javaField))
+    ## 如果不是父类的属性，则生成属性
+    #if(!$table.isSuperColumn($column.javaField))
     /** $column.columnComment */
-#if($column.list)
-#set($parentheseIndex=$column.columnComment.indexOf("（"))
-#if($parentheseIndex != -1)
-#set($comment=$column.columnComment.substring(0, $parentheseIndex))
-#else
-#set($comment=$column.columnComment)
-#end
-#if($parentheseIndex != -1)
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
-#elseif($column.javaType == 'Date')
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "${comment}", width = 30, dateFormat = "yyyy-MM-dd")
-#else
-    @Excel(name = "${comment}")
-#end
-#end
+        ## 如果字段需要在列表中展示，使用Excel注解标记
+        #if($column.list)
+            #set($parentheseIndex=$column.columnComment.indexOf("（"))
+            #if($parentheseIndex != -1)
+                #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+            #else
+                #set($comment=$column.columnComment)
+            #end
+            #if($parentheseIndex != -1)
+            @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+            #elseif($column.javaType == 'Date')
+            @JsonFormat(pattern = "yyyy-MM-dd")
+            @Excel(name = "${comment}", width = 30, dateFormat = "yyyy-MM-dd")
+            #else
+            @Excel(name = "${comment}")
+            #end
+        #end
     private $column.javaType $column.javaField;
 
+    #end
 #end
-#end
+## 如果表有子表，定义子表信息的集合
 #if($table.sub)
-    /** $table.subTable.functionName信息 */
-    private List<${subClassName}> ${subclassName}List;
+/** $table.subTable.functionName信息 */
+private List<${subClassName}> ${subclassName}List;
 
 #end
-#foreach ($column in $columns)
-#if(!$table.isSuperColumn($column.javaField))
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-    public void set${AttrName}($column.javaType $column.javaField) 
-    {
-        this.$column.javaField = $column.javaField;
-    }
 
-    public $column.javaType get${AttrName}() 
-    {
-        return $column.javaField;
-    }
-#end
-#end
 
-#if($table.sub)
-    public List<${subClassName}> get${subClassName}List()
-    {
-        return ${subclassName}List;
-    }
 
-    public void set${subClassName}List(List<${subClassName}> ${subclassName}List)
-    {
-        this.${subclassName}List = ${subclassName}List;
-    }
-
-#end
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-#foreach ($column in $columns)
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-            .append("${column.javaField}", get${AttrName}())
-#end
-#if($table.sub)
-            .append("${subclassName}List", get${subClassName}List())
-#end
-            .toString();
-    }
-}
+        }

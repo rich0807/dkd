@@ -1,30 +1,31 @@
 package com.dkd.manage.service.impl;
 
-import java.util.List;
 import com.dkd.common.utils.DateUtils;
+import com.dkd.manage.domain.Region;
 import com.dkd.manage.domain.vo.RegionVo;
 import com.dkd.manage.mapper.EmpMapper;
+import com.dkd.manage.mapper.RegionMapper;
+import com.dkd.manage.service.IRegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dkd.manage.mapper.RegionMapper;
-import com.dkd.manage.domain.Region;
-import com.dkd.manage.service.IRegionService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 区域管理Service业务层处理
- * 
- * @author ruoyi
- * @date 2025-04-22
+ *
+ * @author itheima
+ * @date 2024-06-05
  */
 @Service
-public class RegionServiceImpl implements IRegionService 
+public class RegionServiceImpl implements IRegionService
 {
     @Autowired
-private EmpMapper empMapper;
+    private RegionMapper regionMapper;
 
     @Autowired
-    private RegionMapper regionMapper;
+    private EmpMapper empMapper;
 
     /**
      * 查询区域管理
@@ -52,7 +53,7 @@ private EmpMapper empMapper;
 
     /**
      * 新增区域管理
-     * 
+     *
      * @param region 区域管理
      * @return 结果
      */
@@ -81,9 +82,10 @@ private EmpMapper empMapper;
         empMapper.updateByRegionId(region.getRegionName(),region.getId());
         return result;
     }
+
     /**
      * 批量删除区域管理
-     * 
+     *
      * @param ids 需要删除的区域管理主键
      * @return 结果
      */
@@ -95,7 +97,7 @@ private EmpMapper empMapper;
 
     /**
      * 删除区域管理信息
-     * 
+     *
      * @param id 区域管理主键
      * @return 结果
      */
@@ -105,6 +107,11 @@ private EmpMapper empMapper;
         return regionMapper.deleteRegionById(id);
     }
 
+    /**
+     * 查询区域列表
+     * @param region
+     * @return RegionVo集合
+     */
     @Override
     public List<RegionVo> selectRegionVoList(Region region) {
         return regionMapper.selectRegionVoList(region);

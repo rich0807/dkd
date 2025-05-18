@@ -1,14 +1,15 @@
 package com.dkd.framework.manager;
 
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import com.dkd.common.utils.Threads;
 import com.dkd.common.utils.spring.SpringUtils;
 
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * 异步任务管理器
- * 
+ *
  * @author ruoyi
  */
 public class AsyncManager
@@ -37,11 +38,12 @@ public class AsyncManager
 
     /**
      * 执行任务
-     * 
+     *
      * @param task 任务
      */
     public void execute(TimerTask task)
     {
+        // 使用任务执行器调度任务，延迟10毫秒执行任务
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
 

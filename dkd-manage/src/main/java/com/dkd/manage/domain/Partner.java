@@ -8,14 +8,14 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 合作商管理对象 tb_partner
  * 
- * @author ruoyi
- * @date 2025-04-22
+ * @author itheima
+ * @date 2024-06-05
  */
 public class Partner extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 合作商ID */
+    /** 主键id */
     private Long id;
 
     /** 合作商名称 */
@@ -32,7 +32,7 @@ public class Partner extends BaseEntity
 
     /** 分成比例 */
     @Excel(name = "分成比例")
-    private Long shareRatio;
+    private Long profitRatio;
 
     /** 账号 */
     @Excel(name = "账号")
@@ -77,14 +77,14 @@ public class Partner extends BaseEntity
     {
         return contactPhone;
     }
-    public void setShareRatio(Long shareRatio) 
+    public void setProfitRatio(Long profitRatio) 
     {
-        this.shareRatio = shareRatio;
+        this.profitRatio = profitRatio;
     }
 
-    public Long getShareRatio() 
+    public Long getProfitRatio() 
     {
-        return shareRatio;
+        return profitRatio;
     }
     public void setAccount(String account) 
     {
@@ -112,7 +112,7 @@ public class Partner extends BaseEntity
             .append("partnerName", getPartnerName())
             .append("contactPerson", getContactPerson())
             .append("contactPhone", getContactPhone())
-            .append("shareRatio", getShareRatio())
+            .append("profitRatio", getProfitRatio())
             .append("account", getAccount())
             .append("password", getPassword())
             .append("createTime", getCreateTime())

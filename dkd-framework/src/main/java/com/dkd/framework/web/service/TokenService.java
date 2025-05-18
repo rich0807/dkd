@@ -1,14 +1,5 @@
 package com.dkd.framework.web.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.dkd.common.constant.CacheConstants;
 import com.dkd.common.constant.Constants;
 import com.dkd.common.core.domain.model.LoginUser;
@@ -22,6 +13,16 @@ import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * token验证处理
@@ -113,13 +114,19 @@ public class TokenService
      */
     public String createToken(LoginUser loginUser)
     {
+        // 生成一个快速UUID作为用户令牌
         String token = IdUtils.fastUUID();
+        // 将生成的令牌设置给用户登录对象
         loginUser.setToken(token);
+        // 设置用户代理信息
         setUserAgent(loginUser);
+        // 刷新redis中用户令牌
         refreshToken(loginUser);
-
+        // 创建一个存储令牌相关数据的Map
         Map<String, Object> claims = new HashMap<>();
+        // 将用户令牌存入claims中
         claims.put(Constants.LOGIN_USER_KEY, token);
+        // 使用claims创建用户登录令牌
         return createToken(claims);
     }
 
@@ -146,10 +153,13 @@ public class TokenService
      */
     public void refreshToken(LoginUser loginUser)
     {
+        // 更新登录时间
         loginUser.setLoginTime(System.currentTimeMillis());
+        // 根据新的登录时间，重新计算令牌有效期
         loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * MILLIS_MINUTE);
-        // 根据uuid将loginUser缓存
+        // 生成loginUser缓存键
         String userKey = getTokenKey(loginUser.getToken());
+        // 使用新的有效期重新缓存用户对象
         redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
     }
 
@@ -160,11 +170,17 @@ public class TokenService
      */
     public void setUserAgent(LoginUser loginUser)
     {
+        // 解析HTTP请求头中的User-Agent字符串，获取用户代理对象
         UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        // 获取客户端IP地址
         String ip = IpUtils.getIpAddr();
+        // 设置登录用户的IP地址
         loginUser.setIpaddr(ip);
+        // 通过IP地址查询真实的登录地点，并设置到登录用户对象中
         loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+        // 获取并设置登录用户的浏览器信息
         loginUser.setBrowser(userAgent.getBrowser().getName());
+        // 获取并设置登录用户的操作系统信息
         loginUser.setOs(userAgent.getOperatingSystem().getName());
     }
 
@@ -178,6 +194,7 @@ public class TokenService
     {
         String token = Jwts.builder()
                 .setClaims(claims)
+                // 使用HS512算法和secret密钥对JWT进行签名
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
         return token;
     }

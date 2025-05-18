@@ -1,33 +1,26 @@
 package com.dkd.manage.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import com.dkd.manage.domain.vo.RegionVo;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.dkd.common.annotation.Log;
 import com.dkd.common.core.controller.BaseController;
 import com.dkd.common.core.domain.AjaxResult;
-import com.dkd.common.enums.BusinessType;
-import com.dkd.manage.domain.Region;
-import com.dkd.manage.service.IRegionService;
-import com.dkd.common.utils.poi.ExcelUtil;
 import com.dkd.common.core.page.TableDataInfo;
+import com.dkd.common.enums.BusinessType;
+import com.dkd.common.utils.poi.ExcelUtil;
+import com.dkd.manage.domain.Region;
+import com.dkd.manage.domain.vo.RegionVo;
+import com.dkd.manage.service.IRegionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 区域管理Controller
- * 
- * @author ruoyi
- * @date 2025-04-22
+ *
+ * @author itheima
+ * @date 2024-06-05
  */
 @RestController
 @RequestMapping("/manage/region")

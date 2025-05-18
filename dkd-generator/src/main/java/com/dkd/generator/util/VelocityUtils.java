@@ -1,10 +1,5 @@
 package com.dkd.generator.util;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import org.apache.velocity.VelocityContext;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.dkd.common.constant.GenConstants;
@@ -12,10 +7,16 @@ import com.dkd.common.utils.DateUtils;
 import com.dkd.common.utils.StringUtils;
 import com.dkd.generator.domain.GenTable;
 import com.dkd.generator.domain.GenTableColumn;
+import org.apache.velocity.VelocityContext;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 模板处理工具类
- * 
+ *
  * @author ruoyi
  */
 public class VelocityUtils
@@ -36,40 +37,68 @@ public class VelocityUtils
      */
     public static VelocityContext prepareContext(GenTable genTable)
     {
+        // 获取模块名称
         String moduleName = genTable.getModuleName();
+        // 获取业务名称
         String businessName = genTable.getBusinessName();
+        // 获取包名称
         String packageName = genTable.getPackageName();
+        // 获取模板类别
         String tplCategory = genTable.getTplCategory();
+        // 获取功能名称
         String functionName = genTable.getFunctionName();
 
+        // 创建Velocity上下文对象
         VelocityContext velocityContext = new VelocityContext();
+        // 将模板类别放入上下文中
         velocityContext.put("tplCategory", genTable.getTplCategory());
+        // 将表名称放入上下文中
         velocityContext.put("tableName", genTable.getTableName());
+        // 将功能名称放入上下文中，如果为空则默认为“【请填写功能名称】”
         velocityContext.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
+        // 将类名称放入上下文中
         velocityContext.put("ClassName", genTable.getClassName());
+        // 将类名称首字母小写后放入上下文中
         velocityContext.put("className", StringUtils.uncapitalize(genTable.getClassName()));
+        // 将模块名称放入上下文中
         velocityContext.put("moduleName", genTable.getModuleName());
+        // 将业务名称首字母大写后放入上下文中
         velocityContext.put("BusinessName", StringUtils.capitalize(genTable.getBusinessName()));
+        // 将业务名称放入上下文中
         velocityContext.put("businessName", genTable.getBusinessName());
+        // 将基础包名放入上下文中
         velocityContext.put("basePackage", getPackagePrefix(packageName));
+        // 将包名放入上下文中
         velocityContext.put("packageName", packageName);
+        // 将作者名称放入上下文中
         velocityContext.put("author", genTable.getFunctionAuthor());
+        // 将生成时间放入上下文中
         velocityContext.put("datetime", DateUtils.getDate());
+        // 将主键列名放入上下文中
         velocityContext.put("pkColumn", genTable.getPkColumn());
+        // 将导入列表放入上下文中
         velocityContext.put("importList", getImportList(genTable));
+        // 将权限前缀放入上下文中
         velocityContext.put("permissionPrefix", getPermissionPrefix(moduleName, businessName));
+        // 将列信息放入上下文中
         velocityContext.put("columns", genTable.getColumns());
+        // 将表信息放入上下文中
         velocityContext.put("table", genTable);
+        // 将字典数据放入上下文中
         velocityContext.put("dicts", getDicts(genTable));
+        // 设置菜单相关的上下文信息
         setMenuVelocityContext(velocityContext, genTable);
+        // 如果是树形模板类别，则设置树形相关的上下文信息
         if (GenConstants.TPL_TREE.equals(tplCategory))
         {
             setTreeVelocityContext(velocityContext, genTable);
         }
+        // 如果是子表模板类别，则设置子表相关的上下文信息
         if (GenConstants.TPL_SUB.equals(tplCategory))
         {
             setSubVelocityContext(velocityContext, genTable);
         }
+        // 返回准备好的模板上下文
         return velocityContext;
     }
 
@@ -129,33 +158,50 @@ public class VelocityUtils
      */
     public static List<String> getTemplateList(String tplCategory, String tplWebType)
     {
+        // 根据前端类型设置使用的Vue版本
         String useWebType = "vm/vue";
         if ("element-plus".equals(tplWebType))
         {
+            // 如果是element-plus，则使用Vue 3版本的模板
             useWebType = "vm/vue/v3";
         }
+
+        // 创建模板列表
         List<String> templates = new ArrayList<String>();
+
+        // 添加后端模板文件路径
         templates.add("vm/java/domain.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/service.java.vm");
         templates.add("vm/java/serviceImpl.java.vm");
         templates.add("vm/java/controller.java.vm");
+
+        // 添加数据库相关模板文件路径
         templates.add("vm/xml/mapper.xml.vm");
         templates.add("vm/sql/sql.vm");
+
+        // 添加前端API模板文件路径
         templates.add("vm/js/api.js.vm");
+
+        // 根据模板类别添加相应的前端模板
         if (GenConstants.TPL_CRUD.equals(tplCategory))
         {
+            // 如果是CRUD模板类别，则添加对应的Vue模板
             templates.add(useWebType + "/index.vue.vm");
         }
         else if (GenConstants.TPL_TREE.equals(tplCategory))
         {
+            // 如果是树形结构模板类别，则添加对应的Vue模板
             templates.add(useWebType + "/index-tree.vue.vm");
         }
         else if (GenConstants.TPL_SUB.equals(tplCategory))
         {
+            // 如果是子表模板类别，则添加对应的Vue模板和子表后端模板
             templates.add(useWebType + "/index.vue.vm");
             templates.add("vm/java/sub-domain.java.vm");
         }
+
+        // 返回模板列表
         return templates;
     }
 
@@ -240,7 +286,7 @@ public class VelocityUtils
 
     /**
      * 根据列类型获取导入包
-     * 
+     *
      * @param genTable 业务表对象
      * @return 返回需要导入的包列表
      */
@@ -270,7 +316,7 @@ public class VelocityUtils
 
     /**
      * 根据列类型获取字典组
-     * 
+     *
      * @param genTable 业务表对象
      * @return 返回字典组
      */
@@ -289,7 +335,7 @@ public class VelocityUtils
 
     /**
      * 添加字典列表
-     * 
+     *
      * @param dicts 字典列表
      * @param columns 列集合
      */

@@ -6,10 +6,10 @@ import com.dkd.common.annotation.Excel;
 import com.dkd.common.core.domain.BaseEntity;
 
 /**
- * 设备类型管路对象 tb_vm_type
+ * 设备类型管理对象 tb_vm_type
  * 
- * @author RQ
- * @date 2025-05-14
+ * @author itheima
+ * @date 2024-06-21
  */
 public class VmType extends BaseEntity
 {

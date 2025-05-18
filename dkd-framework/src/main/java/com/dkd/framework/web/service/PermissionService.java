@@ -1,18 +1,19 @@
 package com.dkd.framework.web.service;
 
-import java.util.Set;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import com.dkd.common.constant.Constants;
 import com.dkd.common.core.domain.entity.SysRole;
 import com.dkd.common.core.domain.model.LoginUser;
 import com.dkd.common.utils.SecurityUtils;
 import com.dkd.common.utils.StringUtils;
 import com.dkd.framework.security.context.PermissionContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Set;
 
 /**
  * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
- * 
+ *
  * @author ruoyi
  */
 @Service("ss")
@@ -20,22 +21,27 @@ public class PermissionService
 {
     /**
      * 验证用户是否具备某权限
-     * 
+     *
      * @param permission 权限字符串
      * @return 用户是否具备某权限
      */
     public boolean hasPermi(String permission)
     {
+        // 检查传入的权限参数是否为空，为空则直接返回false
         if (StringUtils.isEmpty(permission))
         {
             return false;
         }
+        // 获取当前登录用户信息
         LoginUser loginUser = SecurityUtils.getLoginUser();
+        // 检查用户信息或用户权限是否为空，为空则直接返回false
         if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getPermissions()))
         {
             return false;
         }
+        // 将权限信息设置到上下文中，供后续操作使用
         PermissionContextHolder.setContext(permission);
+        // 检查用户权限集合中是否包含指定权限
         return hasPermissions(loginUser.getPermissions(), permission);
     }
 
@@ -81,7 +87,7 @@ public class PermissionService
 
     /**
      * 判断用户是否拥有某个角色
-     * 
+     *
      * @param role 角色字符串
      * @return 用户是否具备某角色
      */
@@ -147,10 +153,10 @@ public class PermissionService
 
     /**
      * 判断是否包含权限
-     * 
-     * @param permissions 权限列表
-     * @param permission 权限字符串
-     * @return 用户是否具备某权限
+     *
+     * @param permissions 用户拥有的权限集合
+     * @param permission 需要检查的特定权限字符串
+     * @return 如果用户拥有全部权限或指定的权限，则返回true；否则返回false
      */
     private boolean hasPermissions(Set<String> permissions, String permission)
     {

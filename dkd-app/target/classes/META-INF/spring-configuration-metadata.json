@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "dkd.sms",
+      "type": "com.dkd.app.common.util.SmsTemplate",
+      "sourceType": "com.dkd.app.common.util.SmsTemplate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dkd.sms.key",
+      "type": "java.lang.String",
+      "sourceType": "com.dkd.app.common.util.SmsTemplate"
+    },
+    {
+      "name": "dkd.sms.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.dkd.app.common.util.SmsTemplate"
+    },
+    {
+      "name": "dkd.sms.sign-name",
+      "type": "java.lang.String",
+      "sourceType": "com.dkd.app.common.util.SmsTemplate"
+    },
+    {
+      "name": "dkd.sms.template-code",
+      "type": "java.lang.String",
+      "sourceType": "com.dkd.app.common.util.SmsTemplate"
+    }
+  ],
+  "hints": []
+}

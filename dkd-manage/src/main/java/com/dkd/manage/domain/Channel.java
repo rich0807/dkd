@@ -10,7 +10,7 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 售货机货道对象 tb_channel
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 public class Channel extends BaseEntity

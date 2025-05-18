@@ -1,6 +1,6 @@
 <p align="center" >
 <span style="background-color: #5373e0;display: inline-block"> 
-<img alt="logo" src="https://likede2-admin.itheima.net/img/logo.3673fab5.png">
+<img alt="logo" src="https://likede2-admin.RQ.net/img/logo.3673fab5.png">
 </span>
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">帝可得</h1>

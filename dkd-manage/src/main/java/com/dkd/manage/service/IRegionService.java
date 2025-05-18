@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 区域管理Service接口
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-05
  */
 public interface IRegionService

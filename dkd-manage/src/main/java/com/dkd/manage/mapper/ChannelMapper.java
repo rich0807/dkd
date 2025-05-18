@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 售货机货道Mapper接口
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 public interface ChannelMapper

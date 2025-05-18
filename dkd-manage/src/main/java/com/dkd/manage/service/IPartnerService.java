@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 合作商管理Service接口
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-05
  */
 public interface IPartnerService

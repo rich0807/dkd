@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 设备管理Controller
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 @RestController

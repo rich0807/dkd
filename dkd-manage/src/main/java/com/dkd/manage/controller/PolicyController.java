@@ -24,7 +24,7 @@ import com.dkd.common.core.page.TableDataInfo;
 /**
  * 策略管理Controller
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-07-12
  */
 @RestController

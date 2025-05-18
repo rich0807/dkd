@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 售货机货道Controller
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 @RestController

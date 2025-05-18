@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 设备管理Mapper接口
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 public interface VendingMachineMapper

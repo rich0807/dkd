@@ -6,7 +6,7 @@ import com.dkd.manage.domain.VmType;
 /**
  * 设备类型管理Service接口
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 public interface IVmTypeService 

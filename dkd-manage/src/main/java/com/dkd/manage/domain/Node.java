@@ -8,7 +8,7 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 点位管理对象 tb_node
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-06-05
  */
 public class Node extends BaseEntity

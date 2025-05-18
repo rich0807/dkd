@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 合作商管理Service业务层处理
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-05
  */
 @Service

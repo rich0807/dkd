@@ -6,7 +6,7 @@ import com.dkd.manage.domain.Policy;
 /**
  * 策略管理Mapper接口
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-07-12
  */
 public interface PolicyMapper 

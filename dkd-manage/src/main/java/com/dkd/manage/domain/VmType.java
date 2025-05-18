@@ -8,7 +8,7 @@ import com.dkd.common.core.domain.BaseEntity;
 /**
  * 设备类型管理对象 tb_vm_type
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 public class VmType extends BaseEntity

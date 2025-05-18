@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 设备管理对象 tb_vending_machine
  *
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 public class VendingMachine extends BaseEntity

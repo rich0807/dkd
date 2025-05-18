@@ -10,7 +10,7 @@ import com.dkd.manage.service.IVmTypeService;
 /**
  * 设备类型管理Service业务层处理
  * 
- * @author itheima
+ * @author RQ
  * @date 2024-06-21
  */
 @Service

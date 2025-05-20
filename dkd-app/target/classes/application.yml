@@ -25,7 +25,7 @@ spring:
 mybatis-plus:
   type-aliases-package: com.dkd.app.domain
   configuration:
-    # å¼€å¯é©¼å³°å‘½åè§„åˆ™æ˜ å°„  è¡¨ user_name  -> å®ä½“ç±» userName
+    # ¿ªÆôÍÕ·åÃüÃû¹æÔòÓ³Éä  ±í user_name  -> ÊµÌåÀà userName
     map-underscore-to-camel-case: true
-    # æ§åˆ¶å°æ‰“å°SQLæ—¥å¿—
+    # ¿ØÖÆÌ¨´òÓ¡SQLÈÕÖ¾
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
